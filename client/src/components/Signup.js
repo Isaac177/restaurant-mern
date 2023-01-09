@@ -6,6 +6,7 @@ import isEmail from "validator/es/lib/isEmail";
 import equals from "validator/es/lib/equals";
 import {showSuccessMessage, showErrorMessage} from "../helpers/message";
 import {showLoading} from "../helpers/loading";
+import {signup} from "../api/auth";
 
 const SignUp = () => {
     const [formData, setFormData] = React.useState({
@@ -83,36 +84,27 @@ const SignUp = () => {
             });
         } else {
             setFormData({...formData, loading: true});
-            const signUpData = {username, email, password};
+            const data = {username, email, password};
 
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(signUpData)
-            };
-
-            fetch('/auth/signup', options)
-            .then(res => res.json())
-            .then(data => {
-                console.log('data', data);
-                if (data.success) {
-                    setFormData({
-                        username: '',
-                        email: '',
-                        password: '',
-                        password2: '',
-                        loading: false,
-                        successMsg: data.message || true
-                    });
-                } else {
-                    setFormData({
-                        ...formData,
-                        loading: false,
-                        errorMsg: data.message || true
-                    });
-                }
+            signup(data)
+            .then(response => {
+                console.log('response', response);
+                setFormData({
+                    username: '',
+                    email: '',
+                    password: '',
+                    password2: '',
+                    loading: false,
+                    successMsg: response.data.successMessage || true
+                });
+            })
+            .catch(err => {
+                console.log('err', err);
+                setFormData({
+                    ...formData,
+                    loading: false,
+                    errorMsg: err.response.data.errorMessage || true
+                });
             });
         }
     }
