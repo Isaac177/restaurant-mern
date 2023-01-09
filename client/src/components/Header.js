@@ -9,7 +9,7 @@ const Header = () => {
     const showNavigation = () => (
         <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
             <div className="flex items-center flex-shrink-0 text-white mr-6">
-                <span className="font-semibold text-xl tracking-tight">Tailwind CSS</span>
+                <Link to='/' className="font-semibold text-xl tracking-tight">RestApp</Link>
             </div>
             <div className="block lg:hidden">
                 <button
@@ -23,10 +23,10 @@ const Header = () => {
                 </button>
                 { navShown && (
                     <div className="text-sm lg:flex-grow block items-center w-full lg:w-auto">
-                        <Link to="#" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                        <Link to="/signin" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
                             Sign In
                         </Link>
-                        <Link to="#" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+                        <Link to="/signup" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
                             Sign Up
                         </Link>
                     </div>
@@ -34,10 +34,10 @@ const Header = () => {
             </div>
             <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto text-sm lg:flex-grow block items-center w-full lg:w-auto sm:block sm:hidden">
                 <div className="text-sm lg:flex-grow float-right ml-auto">
-                    <Link to="#" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                    <Link to="/signin" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
                         Sign In
                     </Link>
-                    <Link to="#" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+                    <Link to="/signup" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
                         Sign Up
                     </Link>
                 </div>
