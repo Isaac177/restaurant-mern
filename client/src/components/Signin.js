@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaSignInAlt } from 'react-icons/fa';
+import {Link} from "react-router-dom";
 
 const SignIn = () => {
     return (
@@ -47,6 +47,12 @@ const SignIn = () => {
                         >
                             Forgot Password?
                         </a>
+                    </div>
+                    <div className="flex items-center justify-between mt-4">
+                        <span className="text-gray-700">Don't have an account ?</span>
+                        <Link to='/signup' className="inline-block align-baseline font-bold text-sm text-teal-500 hover:text-teal-800">
+                            Sign Up
+                        </Link>
                     </div>
                 </form>
                 <p className="text-center text-gray-500 text-xs">

@@ -11,7 +11,14 @@ module.exports = {
     "../client/src/contexts/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'lds-ellipsis': 'lds-ellipsis',
+      },
+    },
+  },
+  variants: {
+    animation: ['responsive'],
   },
   plugins: [],
 }
