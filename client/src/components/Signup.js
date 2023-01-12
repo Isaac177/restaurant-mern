@@ -184,6 +184,7 @@ const SignUp = () => {
                     </div>
                     {successMsg && showSuccessMessage(successMsg)}
                     {errorMsg && showErrorMessage(errorMsg)}
+
                     <div className="flex items-center justify-between">
                         <button
                             className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
