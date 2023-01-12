@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {signupValidator, validatorResult} = require('../middleware/validator');
+const {signupController} = require('../controllers/auth');
 
 
 router.use((req, res, next) => {
@@ -8,10 +9,5 @@ router.use((req, res, next) => {
     next();
 });
 
-router.post('/signup', signupValidator, validatorResult, (req, res) => {
-    res.json({
-        data: 'You hit signup API endpoint'
-    });
-});
-
+router.post('/signup', signupValidator, validatorResult, signupController);
 module.exports = router;

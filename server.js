@@ -11,6 +11,9 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use('/api/auth', authRoutes);
+app.use('/' , (req, res) => {
+    res.send('Hello World!');
+});
 
 
 connectDB().then((t,e)=>{

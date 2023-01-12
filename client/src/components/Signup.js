@@ -84,7 +84,7 @@ const SignUp = () => {
             });
         } else {
             setFormData({...formData, loading: true});
-            const data = {username, email, password};
+            const data = {username, email, password, password2};
 
             signup(data)
             .then(response => {

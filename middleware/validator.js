@@ -13,7 +13,8 @@ exports.validatorResult = (req, res, next) => {
 
     if (hasErrors) {
         const firstError = result.array()[0].msg;
-        return res.status(400).json({error: firstError});
+        return res.status(400).json({errorMessage: firstError});
+    } else {
+        next();
     }
-    next();
 }
