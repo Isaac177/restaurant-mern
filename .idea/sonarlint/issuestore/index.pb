@@ -15,8 +15,6 @@ O
 client/src/components/Header.js,3/3/3339791fee12395acb6c278b56b5a58dfb57f413
 Q
 !client/src/components/NotFound.js,a/a/aa5a161fc2d3666764e34fcc1e8f53aaee6944c3
-O
-client/src/components/Signin.js,6/4/6451c8e7a6952e68a98bc8414352a767828833f2
 M
 client/src/helpers/message.js,2/f/2fa2ccb38e6f916088349d8075d45cfcbd5a1f22
 C
