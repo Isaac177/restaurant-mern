@@ -49,14 +49,15 @@ exports.signinController = async (req, res) => {
             }
         };
 
-        await jwt.sign(payload, jwtSecret, {expiresIn: jwtExpire}, (err, token) => {
+         jwt.sign(payload, jwtSecret, {expiresIn: jwtExpire}, (err, token) => {
             if (err) throw err;
             const {_id, username, email, role} = user;
+
             res.status(200).json({
                 token,
                 user: {_id, username, email, role}
             });
-        });
+         });
 
     } catch (err) {
         console.log(err);
