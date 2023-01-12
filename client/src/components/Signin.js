@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import {showErrorMessage} from "../helpers/message";
 import {showLoading} from "../helpers/loading";
+import isEmpty from "validator/es/lib/isEmpty";
+import {signin} from "../api/auth";
+import isEmail from "validator/es/lib/isEmail";
 
 const SignIn = () => {
     const [formData, setFormData] = React.useState({
@@ -24,16 +27,37 @@ const SignIn = () => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        if (email && password) {
-            setFormData({...formData, loading: true});
-            const {email, password} = formData;
-            const loginData = {email, password};
-            console.log('loginData', loginData);
-        } else {
+        if (isEmpty(email) || isEmpty(password)) {
             setFormData({
                 ...formData,
-                errorMsg: 'Please fill in all fields'
+                errorMsg: 'All fields are required'
             });
+        } else if (!isEmail(email)) {
+            setFormData({
+                ...formData,
+                errorMsg: 'Invalid email'
+            })
+        } else {
+            const {email, password} = formData;
+            const data = {email, password};
+            setFormData({...formData, loading: true});
+            signin(data)
+                .then(response => {
+                    console.log('Axios signin success: ', response);
+                    setFormData({
+                        ...formData,
+                        loading: false,
+                        redirectToDashboard: true
+                    });
+                })
+                .catch(err => {
+                    console.log('Axios signin error: ', err);
+                    setFormData({
+                        ...formData,
+                        loading: false,
+                        errorMsg: err.response.data.errorMessage
+                    });
+                });
         }
     }
 
