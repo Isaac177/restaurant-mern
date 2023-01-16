@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link} from "react-router-dom";
 import {showErrorMessage} from "../helpers/message";
 import {showLoading} from "../helpers/loading";
 import isEmpty from "validator/es/lib/isEmpty";
 import {signin} from "../api/auth";
 import isEmail from "validator/es/lib/isEmail";
+import {isAuthenticated, setAuthentication} from "../helpers/auth";
+import {getCookie} from "../helpers/cookies";
 
 const SignIn = () => {
     const [formData, setFormData] = React.useState({
@@ -41,25 +43,27 @@ const SignIn = () => {
             const {email, password} = formData;
             const data = {email, password};
             setFormData({...formData, loading: true});
+
             signin(data)
-                .then(response => {
-                    console.log('Axios signin success: ', response);
-                    setFormData({
-                        ...formData,
-                        loading: false,
-                        redirectToDashboard: true
-                    });
+                .then((response) => {
+                    setAuthentication(data.token, data.user);
+                    console.log(localStorage.getItem('user'));
+                    /*if (isAuthenticated() && isAuthenticated().role === 1) {
+                        console.log('Redirect to admin dashboard');
+                    } else {
+                        console.log('Redirect to user dashboard');
+                    }*/
+                    console.log(getCookie('token'));
                 })
                 .catch(err => {
                     console.log('Axios signin error: ', err);
                     setFormData({
                         ...formData,
-                        loading: false,
                         errorMsg: err.response.data.errorMessage
-                    });
+                    })
                 });
         }
-    }
+    };
 
     const showSigninForm = () => (
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">

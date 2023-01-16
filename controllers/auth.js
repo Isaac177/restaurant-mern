@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {jwtSecret, jwtExpire} = require('../config/keys');
+const {jwtSecret, jwtExpire} = require('../config/dev');
 
 
 
@@ -30,37 +30,21 @@ exports.signupController = async (req, res) => {
     }
 };
 
+
 exports.signinController = async (req, res) => {
     const {email, password} = req.body;
-
     try {
-        const user = await User.findOne({email});
+        const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({errorMessage: 'Invalid credentials'});
+            return res.status(404).json({ message: "User not found." });
         }
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({errorMessage: 'Invalid credentials'});
+        const isValid = await bcrypt.compare(password, user.password);
+        if (!isValid) {
+            return res.status(401).json({ message: "Invalid password." });
         }
-
-        const payload = {
-            user: {
-                _id: user._id,
-            }
-        };
-
-         jwt.sign(payload, jwtSecret, {expiresIn: jwtExpire}, (err, token) => {
-            if (err) throw err;
-            const {_id, username, email, role} = user;
-
-            res.status(200).json({
-                token,
-                user: {_id, username, email, role}
-            });
-         });
-
+        const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: '1h' });
+        res.status(200).json({ token });
     } catch (err) {
-        console.log(err);
-        return res.status(500).json({errorMessage: 'Server error'});
+        res.status(500).json({ message: err.message });
     }
-}
+};
