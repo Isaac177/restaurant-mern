@@ -6,6 +6,8 @@ import Home from "./Home";
 import Signin from "./Signin";
 import Signup from "./Signup";
 import NotFound from "./NotFound";
+import UserDashboard from "./UserDashboard";
+import AdminDashboard from "./AdminDashboard";
 
 
 const App = () => {
@@ -17,6 +19,8 @@ const App = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/signin" element={<Signin />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/user/dashboard" element={<UserDashboard />} />
+                    <Route path="/admin/dashboard" element={<AdminDashboard />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </main>

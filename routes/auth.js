@@ -16,6 +16,12 @@ router.get('/users', (req, res) => {
     User.find({})
         .then(users => res.json(users))
         .catch(err => res.status(500).json({ message: err.message }));
+    router.get('/users/:role', (req, res) => {
+        User.find({ role: req.params.role })
+            .then(users => res.json(users))
+            .catch(err => res.status(500).json({ message: err.message }));
+    });
+
 });
 
 module.exports = router;

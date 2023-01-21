@@ -1,14 +1,15 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {showErrorMessage} from "../helpers/message";
 import {showLoading} from "../helpers/loading";
 import isEmpty from "validator/es/lib/isEmpty";
 import {signin} from "../api/auth";
 import isEmail from "validator/es/lib/isEmail";
-import {isAuthenticated, setAuthentication} from "../helpers/auth";
-import {getCookie} from "../helpers/cookies";
+import {setAuthentication} from "../helpers/auth";
+
 
 const SignIn = () => {
+    let navigate = useNavigate();
     const [formData, setFormData] = React.useState({
         email: '',
         password: '',
@@ -46,22 +47,14 @@ const SignIn = () => {
 
             signin(data)
                 .then((response) => {
-                    setAuthentication(data.token, data.user);
-                    console.log(localStorage.getItem('user'));
-                    /*if (isAuthenticated() && isAuthenticated().role === 1) {
-                        console.log('Redirect to admin dashboard');
+                    setAuthentication(response.data.token, response.data.user);
+                    if (response.data.user.role === 1)
+                    {
+                        navigate('/admin/dashboard');
                     } else {
-                        console.log('Redirect to user dashboard');
-                    }*/
-                    console.log(getCookie('token'));
+                        navigate('/user/dashboard');
+                    }
                 })
-                .catch(err => {
-                    console.log('Axios signin error: ', err);
-                    setFormData({
-                        ...formData,
-                        errorMsg: err.response.data.errorMessage
-                    })
-                });
         }
     };
 

@@ -1,14 +1,15 @@
 import Cookies from 'js-cookie';
 
-export const setCookie = (key, value) => {
-    Cookies.set(key, value, {
-        expires: 1
-    })
+
+export const setCookie = (name, value, options = {}) => {
+    Cookies.set(name, value, options, {
+        expire : 1
+    });
 };
 
-export const getCookie = (key) => {
-    return Cookies.get(key);
-};
+export const getCookie = (name) => {
+    return Cookies.get(name);
+}
 
 export const removeCookie = (key) => {
     Cookies.remove(key);

@@ -33,40 +33,6 @@ const SignUp = () => {
     const handleSubmit = (evt) => {
         evt.preventDefault();
 
-        /*if (username && email && password) {
-            setFormData({...formData, loading: true});
-            const signUpData = {username, email, password};
-
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(signUpData)
-            };
-
-            fetch('/auth/signup', options)
-            .then(res => res.json())
-            .then(data => {
-                console.log('data', data);
-                if (data.success) {
-                    setFormData({
-                        username: '',
-                        email: '',
-                        password: '',
-                        password2: '',
-                        loading: false,
-                        successMsg: data.message || true
-                    });
-                } else {
-                    setFormData({
-                        ...formData,
-                        loading: false,
-                        errorMsg: data.message || true
-                    });
-                }
-            });
-        }*/
         if (isEmpty(username) || isEmpty(email) || isEmpty(password) || isEmpty(password2)) {
             setFormData({
                 ...formData,

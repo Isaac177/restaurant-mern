@@ -43,7 +43,15 @@ exports.signinController = async (req, res) => {
             return res.status(401).json({ message: "Invalid password." });
         }
         const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: '1h' });
-        res.status(200).json({ token });
+        //res.status(200).json({ token });
+
+        const userData = {
+            id: user._id,
+            email: user.email,
+            role: user.role
+        };
+        //res.cookie('token', token, {expiresIn: jwtExpire});
+        res.status(200).json({ token, user: userData });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
