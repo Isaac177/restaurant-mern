@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
+import {isAuthenticated} from "../helpers/auth";
+
 
 const Header = () => {
     const [navShown, setNavShown] = useState(false);
+    const [isAuth, setIsAuth] = useState(isAuthenticated());
+
+    useEffect(() => {
+        setIsAuth(isAuthenticated());
+    }, []);
 
     const toggleNav = () => setNavShown(!navShown);
 
@@ -34,12 +41,29 @@ const Header = () => {
             </div>
             <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto text-sm lg:flex-grow block items-center w-full lg:w-auto sm:block sm:hidden">
                 <div className="text-sm lg:flex-grow float-right ml-auto">
-                    <Link to="/signin" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                        Sign In
-                    </Link>
-                    <Link to="/signup" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-                        Sign Up
-                    </Link>
+                    {isAuth ? (
+                        <>
+                            <Link to="/signin" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                                Sign In
+                            </Link>
+                            <Link to="/signup" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+                                Sign Up
+                            </Link>
+                        </>
+                    ) : (
+                        <Link to="/" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                            Sign Out
+                        </Link>
+                        )}
+                    {isAuth && isAuth.role === 0 ? (
+                        <Link to="/user/dashboard" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                            User Dashboard
+                        </Link>
+                    ) : (
+                        <Link to="/admin/dashboard" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                            Admin Dashboard
+                        </Link>
+                    )}
                 </div>
             </div>
         </nav>
