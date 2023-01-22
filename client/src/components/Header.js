@@ -1,17 +1,25 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from "react-router-dom";
-import {isAuthenticated} from "../helpers/auth";
+import { Link, useNavigate } from "react-router-dom";
+import {isAuthenticated, logout} from "../helpers/auth";
 
 
 const Header = () => {
     const [navShown, setNavShown] = useState(false);
     const [isAuth, setIsAuth] = useState(isAuthenticated());
+    let navigate = useNavigate();
 
     useEffect(() => {
         setIsAuth(isAuthenticated());
     }, []);
 
     const toggleNav = () => setNavShown(!navShown);
+
+    const handleLogout = evt => {
+        logout(() => {
+            navigate('/signin');
+        });
+        setIsAuth(!isAuthenticated());
+    }
 
     const showNavigation = () => (
         <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
@@ -50,19 +58,34 @@ const Header = () => {
                                 Sign Up
                             </Link>
                         </>
-                    ) : (
-                        <Link to="/" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                            Sign Out
-                        </Link>
-                        )}
-                    {isAuth && isAuth.role === 0 ? (
-                        <Link to="/user/dashboard" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                            User Dashboard
-                        </Link>
-                    ) : (
-                        <Link to="/admin/dashboard" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                            Admin Dashboard
-                        </Link>
+                        ) : (
+                        <>
+                            {isAuth.role === 0 ? (
+                                <>
+                                    <Link to="/user/dashboard" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                                        User Dashboard
+                                    </Link>
+                                    <button
+                                        className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
+                                        onClick={handleLogout}
+                                    >
+                                        Sign Out
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <Link to="/admin/dashboard" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                                        Admin Dashboard
+                                    </Link>
+                                    <button
+                                        className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
+                                        onClick={handleLogout}
+                                    >
+                                        Sign Out
+                                    </button>
+                                </>
+                            )}
+                        </>
                     )}
                 </div>
             </div>

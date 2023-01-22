@@ -16,3 +16,10 @@ export const isAuthenticated = () => {
     return false;
 }
 
+export const logout = (next) => {
+    Cookies.remove('token');
+    Cookies.remove('isAuthenticated');
+    Cookies.remove('user');
+    next();
+}
+
